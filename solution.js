@@ -1,23 +1,51 @@
 //1
 const data = { a: 1 };
 //write your code here 
+
+const isPlainObject = (element) => typeof element === 'object' && !Array.isArray(element) && element !== null;
 console.log(isPlainObject(data)); // true
 
 //2
 const data2 = { a: 1, b: 2 };
-//write your code here 
-console.log(makePairs(data2)); // [['a', 1], ['b', 2]] 
+const makePairs = (object) => {
+    const result = [];
+  
+    for (const prop in object) {
+      if (object.hasOwnProperty(prop)) {
+        result.push([prop, object[prop]]);
+      }
+    }
+  
+    return result;
+  };
+console.log(makePairs(data2)); 
+
 
 //3
 const data3 = { a: 1, b: 2 };
-//write your code here 
-console.log(without(data3, 'b')); // { a: 1 }
+const without = (object, ...args) => {
+    const newObject = { ...object };
+  
+    args.forEach((arg) => {
+      delete newObject[arg];
+    });
+  
+    return newObject;
+  };
+console.log(without(data3, 'b'));
 
 
 //4
 const data4 = { a: 1, b: undefined };
 const data40 = { a:undefined };
-//write your code here 
+const isEmpty = (object) => {
+    const objectKeys = Object.keys(object);
+    if (objectKeys.length === 0) {
+      return true;
+    }
+  
+    return !objectKeys.filter((key) => object[key] || object[key] === 0 || object[key] === false).length;
+  };
 console.log(isEmpty(data4)); // false
 console.log(isEmpty(data40)); // true 
 
@@ -25,6 +53,15 @@ console.log(isEmpty(data40)); // true
 const data5 = { a: 1, b: 1 };  
 const data51 = { a: 1, b: 1 };  
 const data52 = { a: 1, b: 2 };
+const isEqual = (firstObj, secondObj) => {
+    const firstObjKeys = Object.keys(firstObj);
+    const secondObjKeys = Object.keys(secondObj);
+  
+    if (firstObjKeys.length !== secondObjKeys.length) {
+      return false;
+    }
+  
+    return !firstObjKeys.filter((key) => firstObj[key] !== secondObj[key]).length;
 //write your code here 
 console.log(isEqual(data5, data51)); // true  
 console.log(isEqual(data5, data52)); // false
